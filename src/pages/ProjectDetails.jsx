@@ -115,7 +115,7 @@ const ProjectDetails = () => {
 
   if (loading) {
     return (
-      <div>
+      <div className="w-full min-h-screen flex items-center justify-center">
         <MoonLoader color="#36d7b7" />{" "}
       </div>
     );
