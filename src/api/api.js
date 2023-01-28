@@ -27,7 +27,7 @@ export const deleteGarbageImages = async(data) => {
 
     let result = []
      
-    const endpoints = data.map(x=> `http://localhost:8000/api/imagekit/${x.fileId}`)
+    const endpoints = data.map(x=> `https://ruby-snail-kit.cyclic.app/api/imagekit/${x.fileId}`)
     console.log(endpoints)
 
     for (let index = 0; index < endpoints.length; index++) {
