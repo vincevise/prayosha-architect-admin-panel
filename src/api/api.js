@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const axiosInstance = axios.create({
     baseURL:'https://ruby-snail-kit.cyclic.app/api'
+    // baseURL:'http://localhost:8000/api'
 })
 
 export const createProject = async (data) => {
@@ -28,6 +29,8 @@ export const deleteGarbageImages = async(data) => {
     let result = []
      
     const endpoints = data.map(x=> `https://ruby-snail-kit.cyclic.app/api/imagekit/${x.fileId}`)
+    // const endpoints = data.map(x=> `http://localhost:8000/api/imagekit/${x.fileId}`)
+
     console.log(endpoints)
 
     for (let index = 0; index < endpoints.length; index++) {
