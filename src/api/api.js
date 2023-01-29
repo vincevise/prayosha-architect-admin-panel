@@ -1,8 +1,9 @@
 import axios from 'axios'
 
+const baseURL = 'https://prayosha-architect-backend.onrender.com/api'
+
 const axiosInstance = axios.create({
-    baseURL:'https://ruby-snail-kit.cyclic.app/api'
-    // baseURL:'http://localhost:8000/api'
+    baseURL:baseURL
 })
 
 export const createProject = async (data) => {
@@ -28,7 +29,7 @@ export const deleteGarbageImages = async(data) => {
 
     let result = []
      
-    const endpoints = data.map(x=> `https://ruby-snail-kit.cyclic.app/api/imagekit/${x.fileId}`)
+    const endpoints = data.map(x=> `${baseURL}/imagekit/${x.fileId}`)
     // const endpoints = data.map(x=> `http://localhost:8000/api/imagekit/${x.fileId}`)
 
     console.log(endpoints)
