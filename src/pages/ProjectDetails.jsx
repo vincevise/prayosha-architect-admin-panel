@@ -33,7 +33,7 @@ const ProjectDetails = () => {
     details: true,
     gallery: true,
   });
-  const [count, setCount] = useState(0);
+  const [stateChange, setStateChange] = useState(0);
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState({
     id: "",
@@ -48,13 +48,13 @@ const ProjectDetails = () => {
   });
 
   useEffect(() => {
-    setCount(count + 1);
+    setStateChange(stateChange + 1);
   }, [project]);
 
   useEffect(() => {
     getProjectDetails(id).then((res) => {
       setProject(res);
-      setCount(0);
+      setStateChange(0);
       setLoading(false);
     });
   }, []);
@@ -66,7 +66,7 @@ const ProjectDetails = () => {
   };
 
   const handleUpdate = async () => {
-    if (count <= 1) {
+    if (stateChange <= 1) {
       return;
     }
 
@@ -89,7 +89,7 @@ const ProjectDetails = () => {
             localStorage.removeItem("garbageImages");
           });
         }
-        setCount(0);
+        setStateChange(0);
 
         updateNotification("Project Updated successfully", "info");
       })
@@ -273,7 +273,7 @@ const ProjectDetails = () => {
                   <option value="" className="bg-slate-200">
                     Select Project type
                   </option>
-                  {data?.category.map((x) => (
+                  {data?.map((x) => (
                     <option key={x.id} value={x.name}>
                       {x.name}
                     </option>

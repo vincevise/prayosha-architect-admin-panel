@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import { useEffect } from 'react'
 import { createContext } from 'react'
 import { useLocation, useNavigate } from 'react-router'
@@ -7,9 +7,9 @@ import AddImagesGallery from '../component/AddImagesGallery'
 import AddThumbNail from '../component/AddThumbNail'
 import { v4 } from 'uuid' 
 import { createProject, deleteGarbageImages, getCategories } from '../api/api'
-import { getDifference } from '../helper/helperFunction'
+import { deleteImagesFn, getDifference } from '../helper/helperFunction'
 import {useQuery} from 'react-query'
-import { updateNotification } from '../App'
+import { MutationContext, updateNotification } from '../App'
 
 
 export const ProjectContext = createContext()
@@ -17,6 +17,9 @@ export const ProjectContext = createContext()
 const AddProject = () => {
 
     const navigate = useNavigate()
+    
+    const {onMutation,setOnmutation} = useContext(MutationContext)
+
     const [project,setProject] = useState({
         id:v4(),
         name:'',
@@ -43,17 +46,18 @@ const AddProject = () => {
        
         const response = await createProject(project)
             .then(()=>{
-                if(deleteImages.length!==0){
-                    console.log(deleteImages)
-                    deleteGarbageImages(deleteImages)
-                        .then((res)=>{localStorage.removeItem('garbageImages')})
-                        .catch((error)=>{updateNotification(error.message,'error'); console.log(error)})
-                }
-                localStorage.removeItem('garbageImages')
+                // if(deleteImages.length!==0){
+                //     console.log(deleteImages)
+                //     deleteGarbageImages(deleteImages)
+                //         .then(()=>{localStorage.removeItem('garbageImages')})
+                //         .catch((error)=>{updateNotification(error.message,'error'); console.log(error)})
+                // }
+                deleteImagesFn(deleteImages)
+                // localStorage.removeItem('garbageImages')
                 updateNotification('Project Created Successfully','success')
                 navigate(`/project/${project.id}`)
             })
-            .catch((error)=>updateNotification(error.message,'error'))
+            .catch((error)=>{updateNotification(error.message,'error')})
     }
 
 
@@ -102,7 +106,7 @@ const AddProject = () => {
                     />
                     <select name="type" id="" className='px-2 py-1 outline-none border-2 border-slate-400 my-1 rounded-md w-full focus:border-blue-500' onChange={handleChange}>
                         <option value="" className='bg-slate-200'>Select Project type</option>
-                        {data?.category.map((x)=>(<option key={x.id} value={x.name}>{x.name}</option>))}
+                        {data?.map((x)=>(<option key={x.id} value={x.name}>{x.name}</option>))}
                          
                     </select>
                     <textarea className='outline-none focus:border-blue-400 border-slate-400 border-2 w-full rounded-md p-2 mt-1' 

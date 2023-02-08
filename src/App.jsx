@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { createContext, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 import {IKImage,IKContext,IKUpload} from 'imagekitio-react'
@@ -24,14 +24,17 @@ import { toast, ToastContainer } from 'react-toastify'
      theme: "colored",
    });
 
-function App() {
+   export const MutationContext = createContext()
 
+function App() {
+    const [onMutation,setOnmutation] = useState(0)
  
   
   return (
-    <div>
+    <>
+    <MutationContext.Provider value={{onMutation, setOnmutation}}>
        <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -50,8 +53,9 @@ function App() {
           <Route path='/projects' element={<Projects/>}/>
           <Route path='/project/:id' element={<ProjectDetails/>}/>
         </Routes>      
-      </BrowserRouter>      
-    </div>
+      </BrowserRouter>    
+    </MutationContext.Provider>
+    </>
   )
 }
 

@@ -1,3 +1,5 @@
+import { deleteGarbageImages } from "../api/api"
+
 export const dumpGarbageImages = (data) => {
     if(data!=='') {
         if(localStorage.getItem('garbageImages')!==null){
@@ -17,4 +19,12 @@ export const getDifference = async(array2, array1)=>{
       });
 }
 
+export const deleteImagesFn = (deleteImages) => {
+    if(deleteImages.length!==0){
+        console.log(deleteImages)
+        deleteGarbageImages(deleteImages)
+            .then(()=>{localStorage.removeItem('garbageImages')})
+            .catch((error)=>{updateNotification(error.message,'error'); console.log(error)})
+    }
+}
   

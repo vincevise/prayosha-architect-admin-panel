@@ -17,10 +17,10 @@ const Projects = () => {
  
  
   useEffect(()=>{
-    getCategories().then((res)=>setCategory(res))
+    getCategories().then((res)=>{setCategory(res);console.log(res,'category')})
     refetch()
   },[])
-  console.log(data)
+  // console.log(data)
 
   return (
     <div className='px-10 py-20'>
@@ -30,7 +30,7 @@ const Projects = () => {
           
           <span onClick={()=>setType('all')} className={  type === 'all'? 'bg-blue-400 text-white' : ''} >All</span>
           
-          {category?.category?.map((x)=>{
+          {category && category?.map((x)=>{
             return (<span key={x.id} onClick={()=>setType(x.name)} className={x.name === type ? 'bg-blue-400 text-white' : ''}>{x.name}</span>)
           })}
         </div>
